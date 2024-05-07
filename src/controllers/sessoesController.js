@@ -1,11 +1,11 @@
-import AdressModel from '../models/AddressModel';
+import Sessoes from '../models/Sessoes';
 
 const get = async (req, res) => {
   try {
     const id = req.params.id ? req.params.id.toString().replace(/\D/g, '') : null;
 
     if (!id) {
-      const response = await AdressModel.findAll({
+      const response = await Sessoes.findAll({
         order: [['id', 'asc']],
       });
       return res.status(200).send({
@@ -15,7 +15,7 @@ const get = async (req, res) => {
       });
     }
 
-    const response = await AdressModel.findOne({ where: { id } });
+    const response = await Sessoes.findOne({ where: { id } });
 
     if (!response) {
       return res.status(200).send({
@@ -41,16 +41,16 @@ const get = async (req, res) => {
 
 const create = async (dados, res) => {
   const {
-    country, state, city, neighborhood, street, postalCode,
+    idFilme, idSala, lugares, dataInicio, dataFim, preco,
   } = dados;
 
-  const response = await AdressModel.create({
-    country,
-    state,
-    city,
-    neighborhood,
-    street,
-    postalCode,
+  const response = await Sessoes.create({
+    idFilme,
+    idSala,
+    lugares,
+    dataInicio,
+    dataFim,
+    preco,
   });
 
   return res.status(200).send({
@@ -61,7 +61,7 @@ const create = async (dados, res) => {
 };
 
 const update = async (id, dados, res) => {
-  const response = await AdressModel.findOne({ where: { id } });
+  const response = await Sessoes.findOne({ where: { id } });
 
   if (!response) {
     return res.status(200).send({
@@ -71,7 +71,9 @@ const update = async (id, dados, res) => {
     });
   }
 
-  Object.keys(dados).forEach((field) => response[field] = dados[field]);
+  Object.keys(dados).forEach((field) => {
+    response[field] = dados[field];
+  });
 
   await response.save();
   return res.status(200).send({
@@ -110,7 +112,7 @@ const destroy = async (req, res) => {
       });
     }
 
-    const response = await AdressModel.findOne({ where: { id } });
+    const response = await Sessoes.findOne({ where: { id } });
 
     if (!response) {
       return res.status(200).send({
