@@ -12,8 +12,8 @@ const UsuariosSessoes = sequelize.define(
       autoIncrement: true,
     },
     valorAtual: {
-      field: 'valora_atual',
-      type: DataTypes.STRING(20),
+      field: 'valor_atual',
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   },

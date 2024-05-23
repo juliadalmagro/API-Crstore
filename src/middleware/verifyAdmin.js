@@ -34,7 +34,6 @@ export default async (req, res, next) => {
         attributes: ['descricao'],
       }],
     });
-    console.log(usuarios.cargos.descricao);
     if (usuarios.cargos.descricao != 'Admin' && usuarios.cargos.descricao != 'admin') {
       return res.status(401).send({
         message: 'Não é Admin!',

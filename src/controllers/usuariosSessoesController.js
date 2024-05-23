@@ -90,7 +90,7 @@ const persist = async (req, res) => {
   } catch (error) {
     return res.status(200).send({
       type: 'error',
-      message: 'Ops! Ocorreu um erro',
+      message: error.message,
       error,
     });
   }

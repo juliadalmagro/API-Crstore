@@ -25,7 +25,7 @@ const Sessoes = sequelize.define(
       allowNull: false,
     },
     preco: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.FLOAT,
       allowNull: false,
     },
 
@@ -43,8 +43,8 @@ Sessoes.belongsTo(Filmes, {
   onDelete: 'no action',
   onUpdate: 'no action',
   foreignKey: {
-    field: 'id_filmes',
-    name: 'idFilmes',
+    field: 'id_filme',
+    name: 'idFilme',
     allowNull: false,
   },
 });

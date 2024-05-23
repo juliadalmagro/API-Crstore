@@ -6,4 +6,7 @@ export default (app) => {
   app.post('/sessoes/destroy', sessoes.destroy);
   app.get('/sessoes', sessoes.get);
   app.get('/sessoes/:id', sessoes.get);
+  app.get('/sessoesDisponiveis', sessoes.getSessoesDisponiveis);
+  app.get('/sessoesDisponiveis/:id', sessoes.getSessoesDisponiveis);
+  // app.get('sessoesDisponiveis', sessoes.getDadosSessao);
 };
