@@ -1,13 +1,11 @@
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
-import Usuarios from '../models/Usuarios';
+import Orders from '../models/Orders';
 
 const get = async (req, res) => {
   try {
     const id = req.params.id ? req.params.id.toString().replace(/\D/g, '') : null;
 
     if (!id) {
-      const response = await Usuarios.findAll({
+      const response = await Orders.findAll({
         order: [['id', 'asc']],
       });
       return res.status(200).send({
@@ -17,7 +15,7 @@ const get = async (req, res) => {
       });
     }
 
-    const response = await Usuarios.findOne({ where: { id } });
+    const response = await Orders.findOne({ where: { id } });
 
     if (!response) {
       return res.status(200).send({
@@ -43,16 +41,13 @@ const get = async (req, res) => {
 
 const create = async (dados, res) => {
   const {
-    nome, email, cpf, estudante, idCargos, passwordHash,
+    status, total, totalDiscount,
   } = dados;
 
-  const response = await Usuarios.create({
-    nome,
-    email,
-    cpf,
-    estudante,
-    passwordHash,
-    idCargos,
+  const response = await Orders.create({
+    status,
+    total,
+    totalDiscount,
   });
 
   return res.status(200).send({
@@ -63,7 +58,7 @@ const create = async (dados, res) => {
 };
 
 const update = async (id, dados, res) => {
-  const response = await Usuarios.findOne({ where: { id } });
+  const response = await Orders.findOne({ where: { id } });
 
   if (!response) {
     return res.status(200).send({
@@ -114,7 +109,7 @@ const destroy = async (req, res) => {
       });
     }
 
-    const response = await Usuarios.findOne({ where: { id } });
+    const response = await Orders.findOne({ where: { id } });
 
     if (!response) {
       return res.status(200).send({
@@ -139,71 +134,9 @@ const destroy = async (req, res) => {
   }
 };
 
-const register = async (req, res) => {
-  try {
-    const {
-      nome, email, cpf, estudante, idCargos, password,
-    } = req.body;
-    const passwordHash = await bcrypt.hash(password, 10);
-    Usuarios.create({
-      nome,
-      email,
-      cpf,
-      estudante,
-      passwordHash,
-      idCargos,
-    });
-
-    return res.status(201).send({
-      message: 'oi',
-    });
-  } catch (error) {
-    console.log(error.message);
-    return res.status(500).send({
-      message: 'Ops!',
-      response: error.message,
-    });
-  }
-};
-const login = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const user = await Usuarios.findOne({
-      where: {
-        email,
-      },
-    });
-    if (!user) {
-      throw new Error('Usuario ou senha invalidos!');
-    }
-
-    const { passwordHash } = user;
-    console.log(user);
-
-    const resposta = await bcrypt.compare(password, passwordHash);
-
-    if (resposta) {
-      const token = jwt.sign({ userId: user.id, userName: user.nome }, process.env.SECRET_KEY, { expiresIn: '1h' });
-      return res.status(200).send({
-        token,
-      });
-    }
-
-    return res.status(400).send({
-      message: 'Usuario ou senha invalidos!',
-    });
-  } catch (error) {
-    return res.status(500).send({
-      message: 'Ops!',
-      response: error.message,
-    });
-  }
-};
-
 export default {
   get,
+  create,
   persist,
   destroy,
-  register,
-  login,
 };

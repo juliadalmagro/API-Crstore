@@ -1,11 +1,11 @@
-import Salas from '../models/Salas';
+import Cupoms from '../models/Cupoms';
 
 const get = async (req, res) => {
   try {
     const id = req.params.id ? req.params.id.toString().replace(/\D/g, '') : null;
 
     if (!id) {
-      const response = await Salas.findAll({
+      const response = await Cupoms.findAll({
         order: [['id', 'asc']],
       });
       return res.status(200).send({
@@ -15,7 +15,7 @@ const get = async (req, res) => {
       });
     }
 
-    const response = await Salas.findOne({ where: { id } });
+    const response = await Cupoms.findOne({ where: { id } });
 
     if (!response) {
       return res.status(200).send({
@@ -40,11 +40,15 @@ const get = async (req, res) => {
 };
 
 const create = async (dados, res) => {
-  const { idPadraoLugares, observacao } = dados;
+  const {
+    code, type, value, uses,
+  } = dados;
 
-  const response = await Salas.create({
-    idPadraoLugares,
-    observacao,
+  const response = await Cupoms.create({
+    code,
+    type,
+    value,
+    uses,
   });
 
   return res.status(200).send({
@@ -55,7 +59,7 @@ const create = async (dados, res) => {
 };
 
 const update = async (id, dados, res) => {
-  const response = await Salas.findOne({ where: { id } });
+  const response = await Cupoms.findOne({ where: { id } });
 
   if (!response) {
     return res.status(200).send({
@@ -106,7 +110,7 @@ const destroy = async (req, res) => {
       });
     }
 
-    const response = await Salas.findOne({ where: { id } });
+    const response = await Cupoms.findOne({ where: { id } });
 
     if (!response) {
       return res.status(200).send({
@@ -133,6 +137,7 @@ const destroy = async (req, res) => {
 
 export default {
   get,
+  create,
   persist,
   destroy,
 };

@@ -1,11 +1,11 @@
-import PadraoLugares from '../models/PadraoLugares';
+import Products from '../models/Products';
 
 const get = async (req, res) => {
   try {
     const id = req.params.id ? req.params.id.toString().replace(/\D/g, '') : null;
 
     if (!id) {
-      const response = await PadraoLugares.findAll({
+      const response = await Products.findAll({
         order: [['id', 'asc']],
       });
       return res.status(200).send({
@@ -15,7 +15,7 @@ const get = async (req, res) => {
       });
     }
 
-    const response = await PadraoLugares.findOne({ where: { id } });
+    const response = await Products.findOne({ where: { id } });
 
     if (!response) {
       return res.status(200).send({
@@ -40,10 +40,16 @@ const get = async (req, res) => {
 };
 
 const create = async (dados, res) => {
-  const { lugares } = dados;
+  const {
+    name, price, image, description, idCategory,
+  } = dados;
 
-  const response = await PadraoLugares.create({
-    lugares,
+  const response = await Products.create({
+    name,
+    price,
+    image,
+    description,
+    idCategory,
   });
 
   return res.status(200).send({
@@ -54,7 +60,7 @@ const create = async (dados, res) => {
 };
 
 const update = async (id, dados, res) => {
-  const response = await PadraoLugares.findOne({ where: { id } });
+  const response = await Products.findOne({ where: { id } });
 
   if (!response) {
     return res.status(200).send({
@@ -105,7 +111,7 @@ const destroy = async (req, res) => {
       });
     }
 
-    const response = await PadraoLugares.findOne({ where: { id } });
+    const response = await Products.findOne({ where: { id } });
 
     if (!response) {
       return res.status(200).send({
@@ -132,6 +138,7 @@ const destroy = async (req, res) => {
 
 export default {
   get,
+  create,
   persist,
   destroy,
 };

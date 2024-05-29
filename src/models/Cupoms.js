@@ -1,30 +1,39 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../config/config';
 
-const Parametros = sequelize.define(
-  'parametros',
+const Cupoms = sequelize.define(
+  'cupoms',
   {
     id: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
       primaryKey: true,
+      autoIncrement: true,
     },
-    chave: {
+    code: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    valor: {
+    type: {
       type: DataTypes.STRING(255),
       allowNull: false,
+      defaultValue: 'percent',
+    },
+    value: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+    uses: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 999,
     },
   },
-
   {
     freezeTableName: true,
-    timestamps: false,
+    timestamps: true,
     createdAt: 'created_at',
     updatedAt: 'updated_at',
   },
 );
 
-export default Parametros;
+export default Cupoms;

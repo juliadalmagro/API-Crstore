@@ -1,54 +1,57 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../config/config';
-import Cargos from './Cargos';
+import Users from './Users';
 
-const Usuarios = sequelize.define(
-  'usuarios',
+const Adresses = sequelize.define(
+  'adresses',
   {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    nome: {
+    zipCode: {
+      field: 'zip_code',
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    email: {
+    state: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    cpf: {
-      type: DataTypes.STRING(14),
+    city: {
+      type: DataTypes.STRING(255),
       allowNull: false,
-      unique: true,
     },
-    estudante: {
-      type: DataTypes.BOOLEAN,
-    },
-    passwordHash: {
-      field: 'password_hash',
-      type: DataTypes.TEXT,
+    street: {
+      type: DataTypes.STRING(255),
       allowNull: false,
+    },
+    district: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },
+    numberForget: {
+      field: 'number_forget',
+      type: DataTypes.STRING(255),
     },
   },
   {
     freezeTableName: true,
-    timestamps: false,
+    timestamps: true,
     createdAt: 'created_at',
     updatedAt: 'updated_at',
   },
 );
 
-Usuarios.belongsTo(Cargos, {
-  as: 'cargos',
+Adresses.belongsTo(Users, {
+  as: 'users',
   onDelete: 'no action',
   onUpdate: 'no action',
   foreignKey: {
-    field: 'id_cargos',
-    name: 'idCargos',
-    allowNull: false,
+    field: 'id_user',
+    name: 'idUser',
   },
 });
 
-export default Usuarios;
+export default Adresses;

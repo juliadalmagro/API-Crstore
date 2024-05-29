@@ -1,21 +1,21 @@
-import UsuariosSessoesRoute from './UsuariosSessoesRoute';
-import CargosRoute from './CargosRoute';
-import FilmesRoute from './FilmesRoute';
-import PadraoLugaresRoute from './PadraoLugaresRoute';
-import ParametrosRoute from './ParametrosRoute';
-import SalasRoute from './SalasRoute';
-import UsuariosRoute from './UsuariosRoute';
-import SessoesRoute from './SessoesRoute';
+import AdressesRoute from './AdressesRoute';
+import CategoriesRoute from './CategoriesRoute';
+import CupomsRoute from './CupomsRoute';
+import OrdersProductsRoute from './OrdersProductsRoute';
+import OrdersRoute from './OrdersRoute';
+import PaymentsRoute from './PaymentsRoute';
+import ProductsRoute from './ProductsRoute';
+import UsersRoute from './UsersRoute';
 
 function Routes(app) {
-  CargosRoute(app);
-  ParametrosRoute(app);
-  UsuariosRoute(app);
-  FilmesRoute(app);
-  PadraoLugaresRoute(app);
-  SalasRoute(app);
-  SessoesRoute(app);
-  UsuariosSessoesRoute(app);
+  UsersRoute(app);
+  PaymentsRoute(app);
+  CupomsRoute(app);
+  CategoriesRoute(app);
+  AdressesRoute(app);
+  ProductsRoute(app);
+  OrdersRoute(app);
+  OrdersProductsRoute(app);
 }
 
 export default Routes;
