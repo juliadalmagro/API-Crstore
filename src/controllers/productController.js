@@ -136,9 +136,34 @@ const destroy = async (req, res) => {
   }
 };
 
+const getPorCategoria = async (req, res) => {
+  try {
+    const { idCategory } = req.params;
+    const response = await Products.findAll({
+      order: [['id', 'asc']],
+      where: {
+        idCategory,
+      },
+    });
+
+    return res.status(200).send({
+      type: 'success',
+      message: 'Registros carregados com sucesso',
+      data: response,
+    });
+  } catch (error) {
+    return res.status(200).send({
+      type: 'error',
+      message: 'Ops! Ocorreu um erro',
+      error: error.message,
+    });
+  }
+};
+
 export default {
   get,
   create,
   persist,
   destroy,
+  getPorCategoria,
 };

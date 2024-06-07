@@ -6,4 +6,5 @@ export default (app) => {
   app.post('/product/destroy', productController.destroy);
   app.get('/product', productController.get);
   app.get('/product/:id', productController.get);
+  app.get('/product/por-categoria/:idCategory', productController.getPorCategoria);
 };
