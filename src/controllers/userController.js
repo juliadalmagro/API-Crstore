@@ -172,12 +172,13 @@ const register = async (req, res) => {
     });
   }
 };
+
 const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
     const user = await Users.findOne({
       where: {
-        email,
+        username,
       },
     });
     if (!user) {
@@ -189,7 +190,7 @@ const login = async (req, res) => {
     const resposta = await bcrypt.compare(password, passwordHash);
 
     if (resposta) {
-      const token = jwt.sign({ userId: user.id, userName: user.nome }, process.env.SECRET_KEY, { expiresIn: '1h' });
+      const token = jwt.sign({ userId: user.id, username: user.username, role: user.role }, process.env.TOKEN_KEY, { expiresIn: '1h' });
       return res.status(200).send({
         token,
       });
